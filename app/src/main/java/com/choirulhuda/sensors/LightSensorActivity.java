@@ -2,6 +2,7 @@ package com.choirulhuda.sensors;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.io.IOException;
 
 public class LightSensorActivity extends AppCompatActivity implements SensorEventListener {
@@ -19,6 +25,9 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     private Sensor lightSensor;
     private TextView txtBrightnessInfo;
     private MediaPlayer mPlayer;
+    private GraphView mGraphLight;
+    private LineGraphSeries<DataPoint> mSeriesLight;
+    private double graphLastAccelXValue = 5d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,10 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
             sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
+        mGraphLight = initGraph(R.id.graph_light, "Sensor of Light");
+        mSeriesLight = initSeries(Color.RED, "Lux");
+        mGraphLight.addSeries(mSeriesLight);
+
     }
 
     @Override
@@ -43,6 +56,10 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
         switch (sersorType) {
             case Sensor.TYPE_LIGHT:
                 txtBrightnessInfo.setText(getResources().getString(R.string.label_brightness, sensorEvent.values[0]));
+                //graph view
+                graphLastAccelXValue += 0.15d;
+                mSeriesLight.appendData(new DataPoint(graphLastAccelXValue, sensorEvent.values[0]), true, 33);
+
                 if (sensorEvent.values[0] == 0) {
                     mPlayer = new MediaPlayer();
 
@@ -82,5 +99,29 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     public void onBackPressed() {
         super.onBackPressed();
         sensorManager.unregisterListener(this, lightSensor);
+    }
+
+    public GraphView initGraph(int id, String title) {
+        GraphView graph = (GraphView) findViewById(id);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(5);
+        graph.getGridLabelRenderer().setLabelVerticalWidth(100);
+        graph.setTitle(title);
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        return graph;
+    }
+
+    public LineGraphSeries<DataPoint> initSeries(int color, String title) {
+        LineGraphSeries<DataPoint> series;
+        series = new LineGraphSeries<>();
+        series.setDrawDataPoints(false);
+        series.setDrawBackground(true);
+        series.setColor(color);
+        series.setTitle(title);
+        series.setBackgroundColor(0x40FFFFFF);
+        return series;
     }
 }

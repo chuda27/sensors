@@ -14,6 +14,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import java.io.IOException;
 
 public class ProximitySensorActivity extends AppCompatActivity implements SensorEventListener {
@@ -22,6 +26,7 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
     private SensorManager sensorManager;
     private Sensor sensorProximity;
     private MediaPlayer mPlayer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,7 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
         switch (sensorType) {
             case Sensor.TYPE_PROXIMITY:
                 txtInfo.setText(getResources().getString(R.string.label_proximity, sensorEvent.values[0]));
+
                 if (sensorEvent.values[0] == 0) {
                     mPlayer = new MediaPlayer();
 

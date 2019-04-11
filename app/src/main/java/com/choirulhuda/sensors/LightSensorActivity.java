@@ -117,11 +117,11 @@ public class LightSensorActivity extends AppCompatActivity implements SensorEven
     public LineGraphSeries<DataPoint> initSeries(int color, String title) {
         LineGraphSeries<DataPoint> series;
         series = new LineGraphSeries<>();
-        series.setDrawDataPoints(false);
+        series.setDrawDataPoints(true);
         series.setDrawBackground(true);
         series.setColor(color);
         series.setTitle(title);
-        series.setBackgroundColor(0x40FFFFFF);
+        series.setBackgroundColor(Color.argb(100, 204, 119, 119));
         return series;
     }
 }

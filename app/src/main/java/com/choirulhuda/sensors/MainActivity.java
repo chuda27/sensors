@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView imgAllSensor, imgProximitySensor, imgLightSensor, imgSoundSensor;
+    private ImageView imgAllSensor, imgProximitySensor, imgLightSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +18,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgAllSensor = findViewById(R.id.img_list_all_sensor);
         imgLightSensor = findViewById(R.id.img_light_sensor);
         imgProximitySensor = findViewById(R.id.img_proximity_sensor);
-        imgSoundSensor = findViewById(R.id.img_sound_sensor);
-
         imgAllSensor.setOnClickListener(this);
         imgLightSensor.setOnClickListener(this);
         imgProximitySensor.setOnClickListener(this);
-        imgSoundSensor.setOnClickListener(this);
     }
 
     @Override
@@ -37,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.img_light_sensor:
+                Intent intentLight = new Intent(this, LightSensorActivity.class);
+                startActivity(intentLight);
                 break;
 
             case R.id.img_proximity_sensor:
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
 
-            case R.id.img_sound_sensor:
-                break;
         }
 
     }

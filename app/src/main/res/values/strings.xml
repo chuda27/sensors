@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Sensors</string>
     <string name="label_proximity">Objek : %1$.2f cm</string>
+    <string name="label_brightness">Tingkat Kecerahan : %1$.2f lux</string>
+    <string name="label_sound">Detial Info : %1$.2f dB</string>
 </resources>

@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LightSensorActivity"></activity>
-        <activity android:name=".SoundActivity" />
         <activity android:name=".ProximitySensorActivity" />
         <activity android:name=".AllSensorActivity" />
         <activity

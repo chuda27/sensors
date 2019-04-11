@@ -38,7 +38,7 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
         if (sensorProximity == null) {
             txtInfo.setText("Sensor tidak tersedia");
         } else {
-            sensorManager.registerListener(this, sensorProximity, SensorManager.SENSOR_DELAY_UI);
+            sensorManager.registerListener(this, sensorProximity, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
     }
@@ -46,6 +46,7 @@ public class ProximitySensorActivity extends AppCompatActivity implements Sensor
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        sensorManager.unregisterListener(this, sensorProximity);
     }
 
     @Override
